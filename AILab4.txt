@@ -1,0 +1,43 @@
+PROGRAM:
+N = int(input('Enter No. of rows in your table: '))
+
+def printSolution(board): for i in range(N):
+for j in range(N): print(board[i][j], end=" ")
+print()
+
+def isSafe(row, col, slash, backslash, rLookup, sLookup, bsLookup): if (sLookup[slash[row][col]] or
+bsLookup[backslash[row][col]] or rLookup[row]):
+     return False return True
+
+def solveNQueensUtil(board, col, slash, backslash, rLookup, sLookup, bsLookup):
+if col >= N:
+     return True for i in range(N):
+if isSafe(i, col, slash, backslash, rLookup, sLookup, bsLookup): board[i][col] = 1
+rLookup[i] = True sLookup[slash[i][col]] = True bsLookup[backslash[i][col]] = True
+
+              if solveNQueensUtil(board, col + 1, slash, backslash, rLookup, sLookup, bsLookup):
+return True
+
+board[i][col] = 0 rLookup[i] = False
+sLookup[slash[i][col]] = False bsLookup[backslash[i][col]] = False
+     return False def solveNQueens():
+board = [[0] * N for _ in range(N)] slash = [[0] * N for _ in range(N)] backslash = [[0] * N for _ in range(N)] rLookup = [False] * N
+
+x = 2 * N - 1
+sLookup = [False] * x bsLookup = [False] * x
+
+for r in range(N):
+for c in range(N): slash[r][c] = r + c
+backslash[r][c] = r - c + (N - 1)
+
+     if solveNQueensUtil(board, 0, slash, backslash, rLookup, sLookup, bsLookup) == False:
+print("Solution does not exist") return False
+
+printSolution(board) return True
+
+solveNQueens()
+
+
+OUTPUT:
+
+

@@ -1,0 +1,60 @@
+import random
+
+
+responses = {
+"greeting": ["Hello!", "Hi!", "Welcome to our medical facility. How can I assist you?"], "farewell": ["Thank you for consulting us. Take care!", "Goodbye! Get well soon!"], "thanks": ["You're welcome!", "No problem!", "Glad to help!"],
+"default": ["I'm sorry, I didn't understand. Could you please rephrase that?", "I'm still learning.
+Can you provide more details?"],
+}
+
+
+def generate_response(user_input): user_input = user_input.lower()
+
+if "hello" in user_input or user_input=="hi": return random.choice(responses["greeting"])
+elif "goodbye" in user_input or "bye" in user_input: return random.choice(responses["farewell"])
+elif "thank" in user_input:
+return random.choice(responses["thanks"])
+  elif any(symptom in user_input for symptom in ["headache", "runny nose", "sneezing", "sore throat", "fever", "chills", "body ache", "abdominal pain", "poor appetite", "rash", "conjunctivitis", "sweating", "nausea", "vomiting", "diahrrea"]):
+  return handle_medical_inquiry(user_input) else:
+return random.choice(responses["default"])
+
+
+def handle_medical_inquiry(user_input): symptoms = {
+"headache": False, "runny nose": False, "sneezing": False, "sore throat": False, "fever": False, "chills": False, "body ache": False,
+
+"abdominal pain": False, "poor appetite": False, "rash": False, "conjunctivitis": False, "sweating": False, "nausea": False, "vomiting": False, "diahrrea": False
+}
+
+
+for symptom in symptoms.keys(): if symptom in user_input:
+response = input(f"Does the patient have {symptom}? (y/n): ") symptoms[symptom] = response.lower() == 'y'
+
+if symptoms["rash"] and symptoms["body ache"] and symptoms["fever"]:
+    return "Advices and Suggestions:\n1: Varicella vaccine\n2: Immunoglobulin\n3: Acetomenaphin\n4: Acyclovir\nPlease do have have oatmeal and stay at home because It is suggested that the patient has chicken pox."
+
+
+  elif symptoms["headache"] and symptoms["runny nose"] and symptoms["sneezing"] and symptoms["sore throat"]:
+    return "Advices and Suggestions:\n1: Tylenol\n2: Panadol\n3: Nasal spray\nPlease wear warm clothes because It is suggested that the patient has typhoid fever."
+
+
+  elif symptoms["headache"] and symptoms["abdominal pain"] and symptoms["poor appetite"] and symptoms["fever"]:
+    return "Advices and Suggestions:\n1: Chloramphenicol\n2: Amoxicillin\n3: Ciproflaxacin\n4: Azithromycin\nPlease do complete bed rest and take soft diet because It is suggested that the patient has typhoid fever."
+
+
+  elif symptoms["sore throat"] and symptoms["fever"] and symptoms["headache"] and symptoms["chills"] and symptoms["body ache"]:
+    return "Advices and Suggestions:\n1: Tamiflu\n2: Panadol\n3: Zanamivir\nPlease take a warm bath and do salt gargling because It is suggested that the patient has typhoid fever."
+
+  elif symptoms["fever"] and symptoms["sweating"] and symptoms["headache"] and symptoms["nausea"] and symptoms["vomiting"] and symptoms["diahrrea"]:
+    return "Advices and Suggestions:\n1: Aralen\n2: Qualaquin\n3: Plaquenilr\n4: Mefloquine\nPlease do not sleep in open air and cover your full skin because It is suggested that the patient has typhoid fever."
+
+
+else:
+    return "Based on the provided symptoms, it's difficult to determine the exact condition. It's recommended to consult a doctor for a proper diagnosis."
+
+
+print("Chatbot: Hi! Welcome to our medical facility. How can I assist you today?") while True:
+user_input = input("You: ")
+response = generate_response(user_input) print("Chatbot:", response)
+if response in ["Thank you for consulting us. Take care!", "Goodbye! Get well soon!"]: break
+
+
